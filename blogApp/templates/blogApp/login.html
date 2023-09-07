@@ -1,0 +1,26 @@
+<!-- Extension del template padre-->
+{% extends "blogApp/home.html" %} 
+<!-- Cargo statics -->
+{% load static %}
+<!-- uso el espacio reservado jinja en el template padre-->
+{% block titulo %} Acerca de Mi {% endblock %}
+<!-- uso el espacio reservado jinja en el template padre-->
+{% block contenido_que_cambia %}
+   <h3>{{mensaje}}</h3>
+
+    <form action="{% url 'login' %}" method="POST" style="margin:0 auto;"> {% csrf_token %}
+
+        <table style="margin:0 auto;">
+            {{ formulario.as_table}}
+        </table>
+
+        <input style="margin-left:57%" type="submit" value="INGRESAR">
+    </form>
+    <p style="margin-left:46%">¿No estás registrado?</p>
+    <a class="btn btn-info" style="margin-left:47%" href="{% url 'register' %}">Registrarse</a>
+{% endblock %}
+
+{% block h2 %}{{mensaje}} {% endblock %}
+
+{% block p1 %} {% endblock %}
+{% block p2 %} {% endblock %}
