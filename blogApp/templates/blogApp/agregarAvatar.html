@@ -6,8 +6,15 @@
 {% block titulo %} Inicio {% endblock %}
 <!-- uso el espacio reservado jinja en el template padre-->
 {% block contenido_que_cambia %}
-    <img style="width:100px; height:100px; margin-left:48%;margin-top:4%" src= "{% static 'blogApp/assets/img/ok-icon.png' %}"/> 
-    <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+<h3>{{mensaje}}</h3>
+<!-- enctype es para avisarle al form que va a recibir imagenes y no solo texto-->
+<form action="{% url 'agregarAvatar' %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
+    <table>
+        <!-- uso el nombre de la clave del diccionario que devolvi en la vista profesores-->
+        {{formulario.as_table}}
+    </table>
+    <input type="submit" value = "Cargar Avatar">
+</form>
 {% endblock %}
 
 {% block h2 %} {% endblock %}

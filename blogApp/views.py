@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm
 from.models import Avatar
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.views.generic import ListView, DetailView
+from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required 
 
@@ -12,7 +14,7 @@ def home(request):
 
 def acercaDeMi(request):
     mensaje = "Este es un mensaje acerca de mi"
-    return render(request,"blogApp/acercaDeMi.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})
+    return render(request,"blogApp/acercaDeMi.html",{"mensaje":mensaje})
 
 def login_request(request):
     if request.method == "POST":
@@ -24,7 +26,7 @@ def login_request(request):
             usuario = authenticate(username = user, password = clave)
             if usuario is not None:
                 login(request,usuario)
-                return render(request, "blogApp/inicio.html", {"formulario":form,"mensaje":"Usuario logueado correctamente!", "avatar":obtenerAvatar(request)})           
+                return render(request, "blogApp/inicio.html", {"formulario":form,"mensaje":"Bienvenido!", "avatar":obtenerAvatar(request)})           
         else:
             return render(request,"blogApp/login.html", {"formulario":form,"mensaje":"Datos Invalidos", "avatar":obtenerAvatar(request)})    
     else:
@@ -47,11 +49,10 @@ def register(request):
 
 def obtenerAvatar(request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    print(f"len(avatares): {len(avatares)}")
     if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "/media/avatarpordefecto.png"
+        return "/media/avatar/avatarpordefecto.png"
     
 @login_required
 def editarPerfil(request):
@@ -66,12 +67,12 @@ def editarPerfil(request):
             usuario.first_name = info["first_name"] 
             usuario.last_name = info["last_name"]
             usuario.save()
-            return render(request, "AppCoder/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente", "avatar":obtenerAvatar(request)})
+            return render(request, "AppCoder/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente"})
         else:
             return render(request, "AppCoder/editarPerfil.html",{"formulario":form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos", "avatar":obtenerAvatar(request)})
     else:
         form = UserEditForm(instance=usuario)
-        return render(request, "AppCoder/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username,"avatar":obtenerAvatar(request)})
+        return render(request, "AppCoder/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username})
     
 @login_required
 def agregarAvatar(request):
@@ -84,9 +85,33 @@ def agregarAvatar(request):
             if len(avatarViejo)>0 :
                 avatarViejo[0].delete()
             avatar.save()
-            return render(request, "AppCoder/inicio.html", {"mensaje": f"Avatar agregado correctamente", "avatar":obtenerAvatar(request)})
+            return render(request, "blogApp/inicio.html", {"mensaje": f"Avatar agregado correctamente"})
         else:
-            return render(request, "AppCoder/agregarAvatar.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar el avatar"})
+            return render(request, "blogApp/agregarAvatar.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar el avatar"})
     else:
         form = AvatarForm()
-        return render(request, "AppCoder/agregarAvatar.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})
+        return render(request, "blogApp/agregarAvatar.html", {"formulario":form, "usuario": request.user})
+
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
+            usuario.email = info["email"]
+            usuario.password1 = info["password1"]
+            usuario.password2 = info["password2"]
+            usuario.first_name = info["first_name"] 
+            usuario.last_name = info["last_name"]
+            usuario.save()
+            return render(request, "blogApp/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente"})
+        else:
+            return render(request, "blogApp/editarPerfil.html",{"formulario":form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos" })
+    else:
+        form = UserEditForm(instance=usuario)
+        return render(request, "blogApp/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username})
+    
+class UsuarioDetalle(DetailView):
+    model = User
+    template_name = "blogApp/perfil.html"

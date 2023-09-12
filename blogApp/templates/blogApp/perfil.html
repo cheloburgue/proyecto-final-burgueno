@@ -3,11 +3,15 @@
 <!-- Cargo statics -->
 {% load static %}
 <!-- uso el espacio reservado jinja en el template padre-->
-{% block titulo %} Inicio {% endblock %}
+{% block titulo %} Perfil {{user.username}} {% endblock %}
 <!-- uso el espacio reservado jinja en el template padre-->
 {% block contenido_que_cambia %}
-    <img style="width:100px; height:100px; margin-left:48%;margin-top:4%" src= "{% static 'blogApp/assets/img/ok-icon.png' %}"/> 
-    <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+
+    <h2 style ="margin-left:40%"> Datos de usuario </h2>
+        <p style ="margin-left:40%"> NOMBRE : <i> {{user.first_name}}</i></p>
+        <p style ="margin-left:40%"> APELLIDO : <i> {{user.last_name}}</i></p>
+        <p style ="margin-left:40%"> EMAIL : <i> {{user.email}}</i></p>
+    <a class="btn btn-info" style ="margin-left:55%" href="{% url 'editarPerfil' %}">Editar Perfil</a>
 {% endblock %}
 
 {% block h2 %} {% endblock %}

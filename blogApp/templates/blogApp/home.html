@@ -24,7 +24,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link active" style="border: 1px solid #d0d0d0;border-color:red;text-color:red"aria-current="page" href="{% url 'logout' %}">Logout</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'perfil' user.id %}">Perfil</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link active" style="border: 1px solid #d0d0d0;border-color:white" aria-current="page" href="{% url 'login' %}">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'acercaDeMi' %}">Acerca de mi</a></li>
@@ -36,9 +36,9 @@
         <!-- Header - set the background image for the header in the line below-->
         <header class="py-5 bg-image-full" style="background-image: url('{% static 'blogApp/assets/img/playa1.jpg' %}')">
             <div class="text-center my-5">
-                <img class="img-fluid rounded-circle mb-4" src="{{avatar}}" alt="Avatar" />
+                <img class="img-fluid rounded-circle mb-4" src="{{avatar}}" alt="Avatar" style="width:150px;height:150px" />
                 <h1 class="text-white fs-3 fw-bolder">{% block titulo %}  {% endblock %}</h1>
-                <p class="text-white-50 mb-0">Landing Page Template</p>
+                <p class="text-white-50 mb-0"></p>
             </div>
         </header>
         {% block contenido_que_cambia %}

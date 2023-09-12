@@ -3,11 +3,21 @@
 <!-- Cargo statics -->
 {% load static %}
 <!-- uso el espacio reservado jinja en el template padre-->
-{% block titulo %} Inicio {% endblock %}
+{% block titulo %}  Editando Perfil de: {{nombreusuario}}  {% endblock %}
 <!-- uso el espacio reservado jinja en el template padre-->
 {% block contenido_que_cambia %}
-    <img style="width:100px; height:100px; margin-left:48%;margin-top:4%" src= "{% static 'blogApp/assets/img/ok-icon.png' %}"/> 
     <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+
+    <form action="{% url 'editarPerfil' %}" method="POST"> {% csrf_token %}
+        <table style ="margin-left:38%">
+            <!-- uso el nombre de la clave del diccionario que devolvi en la vista profesores-->
+            {{formulario.as_table}}
+        </table>
+        <input type="submit" class="btn btn-success" style ="margin-left:60%" value = "Guardar cambios">
+        <a class="btn btn-info" href="{% url 'agregarAvatar' %}">Editar Avatar</a>
+    </form>
+    
+   
 {% endblock %}
 
 {% block h2 %} {% endblock %}
