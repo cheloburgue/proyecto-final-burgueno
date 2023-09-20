@@ -28,10 +28,10 @@ def login_request(request):
                 login(request,usuario)
                 return render(request, "blogApp/inicio.html", {"formulario":form,"mensaje":"Bienvenido!", "avatar":obtenerAvatar(request)})           
         else:
-            return render(request,"blogApp/login.html", {"formulario":form,"mensaje":"Datos Invalidos", "avatar":obtenerAvatar(request)})    
+            return render(request,"blogApp/login.html", {"formulario":form,"mensaje":"Datos Invalidos"})    
     else:
         form = AuthenticationForm()
-        return render(request, "blogApp/login.html",{"formulario":form, "avatar":obtenerAvatar(request)})
+        return render(request, "blogApp/login.html",{"formulario":form})
             
 def register(request):
     if request.method == "POST":
@@ -40,7 +40,7 @@ def register(request):
             info = form.cleaned_data
             nombre_usuario = info["username"]
             form.save()
-            return render(request, "blogApp/registerok.html", {"mensaje": f"Usuario {nombre_usuario} creado correctaente!. Por favor inicie sesión ingresando a Login.", "avatar":obtenerAvatar(request)})
+            return render(request, "blogApp/registerok.html", {"mensaje": f"Usuario {nombre_usuario} creado correctamente! Para iniciar sesión ingrese a Login."})
         else:
             return render(request, "blogApp/register.html", { "formulario": form, "mensaje": "Datos invalidos", "avatar":obtenerAvatar(request)})
     else:
@@ -52,27 +52,7 @@ def obtenerAvatar(request):
     if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "/media/avatar/avatarpordefecto.png"
-    
-@login_required
-def editarPerfil(request):
-    usuario = request.user
-    if request.method == "POST":
-        form = UserEditForm(request.POST)
-        if form.is_valid():
-            info = form.cleaned_data
-            usuario.email = info["email"]
-            usuario.password1 = info["password1"]
-            usuario.password2 = info["password2"]
-            usuario.first_name = info["first_name"] 
-            usuario.last_name = info["last_name"]
-            usuario.save()
-            return render(request, "AppCoder/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente"})
-        else:
-            return render(request, "AppCoder/editarPerfil.html",{"formulario":form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos", "avatar":obtenerAvatar(request)})
-    else:
-        form = UserEditForm(instance=usuario)
-        return render(request, "AppCoder/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username})
+        return "media/avatarpordefecto.png"
     
 @login_required
 def agregarAvatar(request):
@@ -85,12 +65,12 @@ def agregarAvatar(request):
             if len(avatarViejo)>0 :
                 avatarViejo[0].delete()
             avatar.save()
-            return render(request, "blogApp/inicio.html", {"mensaje": f"Avatar agregado correctamente"})
+            return render(request, "blogApp/inicio.html", {"mensaje": f"Avatar agregado correctamente", "avatar":obtenerAvatar(request)})
         else:
             return render(request, "blogApp/agregarAvatar.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar el avatar"})
     else:
         form = AvatarForm()
-        return render(request, "blogApp/agregarAvatar.html", {"formulario":form, "usuario": request.user})
+        return render(request, "blogApp/agregarAvatar.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})
 
 @login_required
 def editarPerfil(request):
@@ -105,13 +85,21 @@ def editarPerfil(request):
             usuario.first_name = info["first_name"] 
             usuario.last_name = info["last_name"]
             usuario.save()
-            return render(request, "blogApp/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente"})
+            return render(request, "blogApp/inicio.html", {"mensaje":f"Usuario {usuario.username} editado correctamente", "avatar":obtenerAvatar(request)})
         else:
-            return render(request, "blogApp/editarPerfil.html",{"formulario":form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos" })
+            return render(request, "blogApp/editarPerfil.html",{"formulario":form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos","avatar":obtenerAvatar(request)})
     else:
         form = UserEditForm(instance=usuario)
-        return render(request, "blogApp/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username})
+        return render(request, "blogApp/editarPerfil.html",{"formulario":form,"nombreusuario":usuario.username, "avatar":obtenerAvatar(request)})
     
 class UsuarioDetalle(DetailView):
     model = User
     template_name = "blogApp/perfil.html"
+
+def agregarPost(request):
+    mensaje = "Esta es la pagina de agregar posts"
+    return render(request,"blogApp/agregarPost.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})
+
+def misPost(request):
+    mensaje = "Esta es la pagina de listar posts"
+    return render(request,"blogApp/misPost.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})

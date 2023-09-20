@@ -6,3 +6,16 @@ from django.contrib.auth.models import User
 class Avatar(models.Model):
     imagen = models.ImageField(upload_to="avatar")
     user = models.ForeignKey(User,on_delete=models.CASCADE, null = True, blank = True)
+
+class AgregarPost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=500)
+    imagen = models.ImageField( upload_to="avatar", null=False, blank=False)
+    fechaPublicacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['user', '-fechaPublicacion']
+
+    def __str__(self):
+        return self.titulo
