@@ -1,6 +1,8 @@
 from django import forms 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
+
+from .models import AgregarPost
 
 
 
@@ -43,3 +45,14 @@ class UserEditForm(UserCreationForm):
         model = User
         fields = ["email","password1","password2","first_name","last_name"]
         help_texts = { k:"" for k in fields} 
+
+class AgregarPostForm(forms.ModelForm):
+
+        user = forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id':'usuario_id', 'type':'hidden'}),
+        titulo = forms.TextInput(attrs={'class': 'form-control'}),
+        descripcion = forms.Textarea(attrs={'class': 'form-control'}),
+        imagen = forms.ImageField(label="Imagen")
+
+        class Meta:
+            model = AgregarPost 
+            fields = ['titulo','descripcion','imagen']

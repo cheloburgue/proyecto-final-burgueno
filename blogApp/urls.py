@@ -17,4 +17,4 @@ urlpatterns =[
     path("agregarAvatar/", agregarAvatar, name = "agregarAvatar"),
     path("misPost/", misPost, name = "misPost"),
     path("agregarPost/", agregarPost, name = "agregarPost"),
-]
+] 

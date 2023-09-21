@@ -8,7 +8,7 @@ class Avatar(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null = True, blank = True)
 
 class AgregarPost(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     titulo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=500)
     imagen = models.ImageField( upload_to="avatar", null=False, blank=False)

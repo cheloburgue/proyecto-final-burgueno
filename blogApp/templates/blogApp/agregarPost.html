@@ -2,12 +2,17 @@
 {% extends "blogApp/home.html" %} 
 <!-- Cargo statics -->
 {% load static %}
-<!-- uso el espacio reservado jinja en el template padre-->
-{% block titulo %} Agregar Post {% endblock %}
-<!-- uso el espacio reservado jinja en el template padre-->
+
+{% block titulo %} {{user.username}} {% endblock %}
+
 {% block contenido_que_cambia %}
-    <img style="width:100px; height:100px; margin-left:48%;margin-top:4%" src= "{% static 'blogApp/assets/img/ok-icon.png' %}"/> 
-    <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+    
+    <h4>{{mensaje}}</h4>
+
+    <form action="{% url 'agregarPost' %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
+            <p>{{formulario.as_p}}</p>
+        <input type="submit" value = "Guardar">
+    </form>
 {% endblock %}
 
 {% block h2 %} {% endblock %}
