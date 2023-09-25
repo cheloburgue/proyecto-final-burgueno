@@ -15,6 +15,6 @@ urlpatterns =[
     path("perfil/<pk>", UsuarioDetalle.as_view(), name="perfil"),
     path("editarPerfil/", editarPerfil, name="editarPerfil"),
     path("agregarAvatar/", agregarAvatar, name = "agregarAvatar"),
-    path("misPost/", misPost, name = "misPost"),
+    path("misPost/",MisPostList.as_view(), name = "misPost"),
     path("agregarPost/", agregarPost, name = "agregarPost"),
 ] 

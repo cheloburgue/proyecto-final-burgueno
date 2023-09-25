@@ -48,9 +48,9 @@ class UserEditForm(UserCreationForm):
 
 class AgregarPostForm(forms.ModelForm):
 
-        user = forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id':'usuario_id', 'type':'hidden'}),
-        titulo = forms.TextInput(attrs={'class': 'form-control'}),
-        descripcion = forms.Textarea(attrs={'class': 'form-control'}),
+        user = forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id':'usuario_id', 'type':'hidden'})
+        titulo = forms.TextInput(attrs={'class': 'form-control'})
+        descripcion = forms.CharField(widget=forms.Textarea)
         imagen = forms.ImageField(label="Imagen")
 
         class Meta:

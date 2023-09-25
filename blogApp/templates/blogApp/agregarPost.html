@@ -9,10 +9,11 @@
     
     <h4>{{mensaje}}</h4>
 
-    <form action="{% url 'agregarPost' %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
-            <p>{{formulario.as_p}}</p>
+    <form style=" width: 50vw; margin-left : 15vw;" action="{% url 'agregarPost' %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
+            {{formulario.as_p}}
         <input type="submit" value = "Guardar">
     </form>
+
 {% endblock %}
 
 {% block h2 %} {% endblock %}

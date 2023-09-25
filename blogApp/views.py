@@ -54,7 +54,7 @@ def obtenerAvatar(request):
     if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "media/avatarpordefecto.png"
+        return "avatar/avatarpordefecto.png"
     
 @login_required
 def agregarAvatar(request):
@@ -116,6 +116,15 @@ def agregarPost(request):
         return render(request, "blogApp/agregarPost.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})  
 
 
-def misPost(request):
+#def misPost(request):
+    posts = AgregarPost.objects.all()
+    #respuesta = ""
+    #for post in posts:
+    #   respuesta += f"{post.titulo} - {post.descripcion} - {post.imagen} <br>"
     mensaje = "Esta es la pagina de listar posts"
-    return render(request,"blogApp/misPost.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})
+    return render(request,"blogApp/misPost.html",{"mensaje":mensaje,"posts":posts,"avatar":obtenerAvatar(request)})
+
+class MisPostList(ListView):
+    model = AgregarPost
+    queryset = AgregarPost.objects.all()
+    template_name = "blogApp/misPost.html"
