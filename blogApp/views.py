@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm
-from.models import Avatar
+from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm, AgregarPostForm
+from.models import Avatar, AgregarPost
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required 
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -17,6 +18,7 @@ def acercaDeMi(request):
     return render(request,"blogApp/acercaDeMi.html",{"mensaje":mensaje})
 
 def login_request(request):
+    usuario = request.user
     if request.method == "POST":
         form = AuthenticationForm(request, data = request.POST)
         if form.is_valid():
@@ -26,7 +28,7 @@ def login_request(request):
             usuario = authenticate(username = user, password = clave)
             if usuario is not None:
                 login(request,usuario)
-                return render(request, "blogApp/inicio.html", {"formulario":form,"mensaje":"Bienvenido!", "avatar":obtenerAvatar(request)})           
+                return render(request, "blogApp/inicio.html", {"formulario":form, "mensaje":f"Bienvenido {usuario.username}!", "avatar":obtenerAvatar(request)})           
         else:
             return render(request,"blogApp/login.html", {"formulario":form,"mensaje":"Datos Invalidos"})    
     else:
@@ -52,7 +54,7 @@ def obtenerAvatar(request):
     if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "media/avatarpordefecto.png"
+        return "avatar/avatarpordefecto.png"
     
 @login_required
 def agregarAvatar(request):
@@ -96,10 +98,33 @@ class UsuarioDetalle(DetailView):
     model = User
     template_name = "blogApp/perfil.html"
 
+@login_required
 def agregarPost(request):
-    mensaje = "Esta es la pagina de agregar posts"
-    return render(request,"blogApp/agregarPost.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})
+    if request.method == "POST":
+        form = AgregarPostForm(request.POST,request.FILES)
+        if form.is_valid():
+            titulo = request.POST["titulo"]
+            descripcion = request.POST["descripcion"]
+            imagen = request.FILES["imagen"]
+            post = AgregarPost(user = request.user, titulo = titulo, descripcion = descripcion, imagen=imagen)
+            post.save()
+            return render(request, "blogApp/inicio.html", {"mensaje": f"Post agregado correctamente", "avatar":obtenerAvatar(request)})
+        else:
+            return render(request, "blogApp/agregarPost.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar Post", "avatar":obtenerAvatar(request)})
+    else:
+        form = AgregarPostForm()
+        return render(request, "blogApp/agregarPost.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})  
 
-def misPost(request):
+
+#def misPost(request):
+    posts = AgregarPost.objects.all()
+    #respuesta = ""
+    #for post in posts:
+    #   respuesta += f"{post.titulo} - {post.descripcion} - {post.imagen} <br>"
     mensaje = "Esta es la pagina de listar posts"
-    return render(request,"blogApp/misPost.html",{"mensaje":mensaje, "avatar":obtenerAvatar(request)})
+    return render(request,"blogApp/misPost.html",{"mensaje":mensaje,"posts":posts,"avatar":obtenerAvatar(request)})
+
+class MisPostList(ListView):
+    model = AgregarPost
+    queryset = AgregarPost.objects.all()
+    template_name = "blogApp/misPost.html"

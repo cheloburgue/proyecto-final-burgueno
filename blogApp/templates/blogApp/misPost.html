@@ -2,15 +2,21 @@
 {% extends "blogApp/home.html" %} 
 <!-- Cargo statics -->
 {% load static %}
-<!-- uso el espacio reservado jinja en el template padre-->
-{% block titulo %} Inicio {% endblock %}
-<!-- uso el espacio reservado jinja en el template padre-->
+{% block titulo %} {{user.username}} {% endblock %}
 {% block contenido_que_cambia %}
-    <img style="width:100px; height:100px; margin-left:48%;margin-top:4%" src= "{% static 'blogApp/assets/img/ok-icon.png' %}"/> 
     <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+
+
 {% endblock %}
 
-{% block h2 %} {% endblock %}
+{% block div %} 
+
+    <h3>{{titulo}}</h3>
+    <img src={{imagen}} class="" width="100px">
+    <p>{{descripcion}}</p>
+
+
+{% endblock %}
 
 {% block p1 %}{% endblock %}
 {% block p2 %} {% endblock %}
