@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm, AgregarPostForm
 from.models import Avatar, AgregarPost
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -115,16 +115,11 @@ def agregarPost(request):
         form = AgregarPostForm()
         return render(request, "blogApp/agregarPost.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})  
 
+@login_required
+def misPost(request,user_id):
+    user_post = AgregarPost.objects.filter(user_id = user_id)
+    return render(request,"blogApp/misPost.html",{"user_post":user_post,"avatar":obtenerAvatar(request)})
 
-#def misPost(request):
-    posts = AgregarPost.objects.all()
-    #respuesta = ""
-    #for post in posts:
-    #   respuesta += f"{post.titulo} - {post.descripcion} - {post.imagen} <br>"
-    mensaje = "Esta es la pagina de listar posts"
-    return render(request,"blogApp/misPost.html",{"mensaje":mensaje,"posts":posts,"avatar":obtenerAvatar(request)})
-
-class MisPostList(ListView):
-    model = AgregarPost
-    queryset = AgregarPost.objects.all()
-    template_name = "blogApp/misPost.html"
+def listar_post(request):
+    user_post = AgregarPost.objects.all()
+    return render(request,"blogApp/misPost.html",{"user_post":user_post,"avatar":obtenerAvatar(request)})

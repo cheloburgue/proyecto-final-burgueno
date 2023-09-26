@@ -4,7 +4,7 @@ from .views import *
 from django.contrib.auth.views import LogoutView
 
 urlpatterns =[
-    path("",home, name = "home"),
+    path("",listar_post, name = "home"),
     path("acercaDeMi/",acercaDeMi ,name="acercaDeMi"),
 
     # LOGIN LOGOUT REGISTER
@@ -15,6 +15,6 @@ urlpatterns =[
     path("perfil/<pk>", UsuarioDetalle.as_view(), name="perfil"),
     path("editarPerfil/", editarPerfil, name="editarPerfil"),
     path("agregarAvatar/", agregarAvatar, name = "agregarAvatar"),
-    path("misPost/",MisPostList.as_view(), name = "misPost"),
+    path("misPost/<int:user_id>/",misPost, name = "misPost"),
     path("agregarPost/", agregarPost, name = "agregarPost"),
 ] 

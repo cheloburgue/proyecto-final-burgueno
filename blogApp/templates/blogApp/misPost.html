@@ -5,18 +5,15 @@
 {% block titulo %} {{user.username}} {% endblock %}
 {% block contenido_que_cambia %}
     <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
-
-
-{% endblock %}
-
-{% block div %} 
-
-    <h3>{{titulo}}</h3>
-    <img src={{imagen}} class="" width="100px">
-    <p>{{descripcion}}</p>
-
+    
+    {% for post in user_post %}
+        <h3 style="margin-left:38%" >{{post.titulo}}</h3>
+        <img style="margin-left:38%" src="{{post.imagen.url}}" height="500" width="500px"/>
+        <p style="margin-left:38%" >{{post.descripcion}}</p>
+    {% endfor %}
 
 {% endblock %}
+
 
 {% block p1 %}{% endblock %}
 {% block p2 %} {% endblock %}
