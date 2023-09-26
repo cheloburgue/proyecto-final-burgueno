@@ -16,5 +16,7 @@ urlpatterns =[
     path("editarPerfil/", editarPerfil, name="editarPerfil"),
     path("agregarAvatar/", agregarAvatar, name = "agregarAvatar"),
     path("misPost/<int:user_id>/",misPost, name = "misPost"),
-    path("agregarPost/", agregarPost, name = "agregarPost"),
+    path("agregarPost/", agregarPost, name = "agregarPost"), 
+    path("detallePost/<id>/", detallePost, name = "detallePost"),
 ] 
+
