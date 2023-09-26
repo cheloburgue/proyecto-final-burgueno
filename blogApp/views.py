@@ -123,3 +123,13 @@ def misPost(request,user_id):
 def listar_post(request):
     user_post = AgregarPost.objects.all()
     return render(request,"blogApp/misPost.html",{"user_post":user_post,"avatar":obtenerAvatar(request)})
+
+def detallePost(request,id):
+   post = get_object_or_404(AgregarPost,id=id)
+   return render(request,"blogApp/detallePost.html",{"post":post,"avatar":obtenerAvatar(request)})
+
+#class DetallePost(DetailView):
+#    model = AgregarPost
+#    template_name = "blogApp/detallePost.html"
+
+
