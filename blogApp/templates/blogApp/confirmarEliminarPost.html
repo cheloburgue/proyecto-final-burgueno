@@ -1,0 +1,15 @@
+<!-- Extension del template padre-->
+{% extends "blogApp/home.html" %} 
+<!-- Cargo statics -->
+{% load static %}
+{% block titulo %} {{user.username}} {% endblock %}
+{% block contenido_que_cambia %}
+
+    <h3>{{mensaje}}</h3>
+    <a class="btn btn-info" style="margin-left:60%" href="{% url 'misPost' user.id %}">Voler a Mis Posts</a>
+
+{% endblock %}
+
+
+{% block p1 %}{% endblock %}
+{% block p2 %} {% endblock %}

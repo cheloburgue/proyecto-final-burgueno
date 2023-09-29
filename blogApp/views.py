@@ -128,8 +128,20 @@ def detallePost(request,id):
    post = get_object_or_404(AgregarPost,id=id)
    return render(request,"blogApp/detallePost.html",{"post":post,"avatar":obtenerAvatar(request)})
 
-#class DetallePost(DetailView):
-#    model = AgregarPost
-#    template_name = "blogApp/detallePost.html"
+@login_required
+def eliminarPost(request,id):
+    post = AgregarPost.objects.get(id=id)
+    return render(request, "blogApp/eliminarPost.html", {"post":post,"avatar":obtenerAvatar(request)})
 
+@login_required
+def confirmarEliminarPost(request,id):
+    post = AgregarPost.objects.get(id=id)
+    post.delete()
+    mensaje = "Publicacion Elimiada!"
+    return render(request, "blogApp/confirmarEliminarPost.html", {"mensaje": mensaje,"avatar":obtenerAvatar(request)})
+
+def editarPost(request,id):
+    post = AgregarPost.objects.get(id=id)
+    mensaje = "Estas editando el post"
+    return render(request,"blogApp/editarPost.html",{"mensaje":mensaje, "post":post,"avatar":obtenerAvatar(request)})
 

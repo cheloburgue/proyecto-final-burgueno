@@ -1,0 +1,18 @@
+<!-- Extension del template padre-->
+{% extends "blogApp/home.html" %} 
+<!-- Cargo statics -->
+{% load static %}
+
+{% block titulo %} {{user.username}} {% endblock %}
+
+{% block contenido_que_cambia %}
+    
+    <h4>{{mensaje}} {{post.titulo}}</h4>
+
+
+{% endblock %}
+
+{% block h2 %} {% endblock %}
+
+{% block p1 %}{% endblock %}
+{% block p2 %} {% endblock %}
