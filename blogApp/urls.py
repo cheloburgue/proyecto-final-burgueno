@@ -18,5 +18,8 @@ urlpatterns =[
     path("misPost/<int:user_id>/",misPost, name = "misPost"),
     path("agregarPost/", agregarPost, name = "agregarPost"), 
     path("detallePost/<id>/", detallePost, name = "detallePost"),
+    path("eliminarPost/<id>/", eliminarPost, name = "eliminarPost"),
+    path("confirmarEliminarPost/<id>/", confirmarEliminarPost, name = "confirmarEliminarPost"),
+    path("editarPost/<id>/", editarPost, name = "editarPost"),
 ] 
 

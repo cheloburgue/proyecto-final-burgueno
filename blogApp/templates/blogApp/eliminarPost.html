@@ -1,0 +1,16 @@
+<!-- Extension del template padre-->
+{% extends "blogApp/home.html" %} 
+<!-- Cargo statics -->
+{% load static %}
+{% block titulo %} {{user.username}} {% endblock %}
+{% block contenido_que_cambia %}
+
+    <h3>Estas seguro queres eliminar el Post {{post.titulo}}?</h3>
+    <a class="btn btn-success" style="margin-left:60%" href="{% url 'detallePost' post.id %}">No</a>
+    <a class="btn btn-danger" style="margin-left:60%" href="{% url 'confirmarEliminarPost' post.id %}">Si</a>
+
+{% endblock %}
+
+
+{% block p1 %}{% endblock %}
+{% block p2 %} {% endblock %}

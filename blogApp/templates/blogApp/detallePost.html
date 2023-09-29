@@ -15,6 +15,12 @@
     <p style="margin-left:38%">Fecha: {{post.fechaPublicacion}}</p>
     </div>
 
+    {% if user.id == post.user_id%}
+        <a class="btn btn-danger" style="margin-left:60%" href="{% url 'eliminarPost' post.id %}">Eliminar</a>
+        <a class="btn btn-info" style="margin-left:60%" href="{% url 'editarPost' post.id %}">Editar</a>
+    {% endif %}
+    </div>
+
 {% endblock %}
 
 
