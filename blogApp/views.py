@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm, AgregarPostForm
+from .forms import RegistroUsuarioForm, AvatarForm, UserEditForm, AgregarPostForm, EditarPostForm
 from.models import Avatar, AgregarPost
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.views.generic import ListView, DetailView, CreateView
@@ -140,8 +140,22 @@ def confirmarEliminarPost(request,id):
     mensaje = "Publicacion Elimiada!"
     return render(request, "blogApp/confirmarEliminarPost.html", {"mensaje": mensaje,"avatar":obtenerAvatar(request)})
 
+
 def editarPost(request,id):
-    post = AgregarPost.objects.get(id=id)
-    mensaje = "Estas editando el post"
-    return render(request,"blogApp/editarPost.html",{"mensaje":mensaje, "post":post,"avatar":obtenerAvatar(request)})
+    posting = AgregarPost.objects.get(id=id)
+    if request.method == "POST":
+        form = EditarPostForm(request.POST,request.FILES)
+        if form.is_valid():
+            titulo = request.POST["titulo"]
+            descripcion = request.POST["descripcion"]
+            imagen = request.FILES["imagen"]
+            post = AgregarPost(id = posting.id, titulo = titulo, descripcion = descripcion, imagen=imagen)
+            post.save()
+            return render(request, "blogApp/confirmaEdicion.html", {"mensaje": f"Post editado correctamente", "avatar":obtenerAvatar(request)})
+        else:
+            return render(request, "blogApp/editarPost.html",{"formulario":form,"post":posting, "mensaje":"Error al editar Post", "avatar":obtenerAvatar(request)})
+    else:
+        form = EditarPostForm()
+        return render(request, "blogApp/editarPost.html", {"formulario":form,"post":posting,"avatar":obtenerAvatar(request)}) 
+    
 

@@ -14,10 +14,13 @@
     <p style="margin-left:38%">Descripción: {{post.descripcion}}</p>
     <p style="margin-left:38%">Fecha: {{post.fechaPublicacion}}</p>
     </div>
-
+    
     {% if user.id == post.user_id%}
         <a class="btn btn-danger" style="margin-left:60%" href="{% url 'eliminarPost' post.id %}">Eliminar</a>
-        <a class="btn btn-info" style="margin-left:60%" href="{% url 'editarPost' post.id %}">Editar</a>
+        <a class="btn btn-success" style="margin-left:60%" href="{% url 'editarPost' post.id %}">Editar</a>
+        <a class="btn btn-info" style="margin-left:60%" href="{% url 'misPost' user.id %}">Volver a mis Post</a>
+    {% else %}
+         <a class="btn btn-info" style="margin-left:60%" href="{% url 'home' %}">Volver al Home</a>
     {% endif %}
     </div>
 
