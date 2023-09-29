@@ -7,13 +7,7 @@
 
 {% block contenido_que_cambia %}
     
-    <h4>Editando Post {{post.titulo}}</h4>
-
-    <form action="{% url 'editarPost' post.id %}" method="POST"> {% csrf_token %}
-        {{form.as_table}}
-    </form>
-    <input type="submit" class="btn btn-success" style ="margin-left:60%" value = "Guardar cambios">
-    
+    <h4>{{mensaje}}</h4>
 
 
 {% endblock %}

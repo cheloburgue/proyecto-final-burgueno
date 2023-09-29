@@ -43,3 +43,14 @@ class AgregarPostForm(forms.ModelForm):
         class Meta:
             model = AgregarPost 
             fields = ['titulo','descripcion','imagen']
+
+class EditarPostForm(forms.ModelForm):
+
+        user = forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id':'usuario_id', 'type':'hidden'})
+        titulo = forms.TextInput(attrs={'class': 'form-control'})
+        descripcion = forms.CharField(widget=forms.Textarea)
+        imagen = forms.ImageField(label="Imagen")
+
+        class Meta:
+            model = AgregarPost 
+            fields = ['titulo','descripcion','imagen']
