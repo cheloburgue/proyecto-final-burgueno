@@ -142,20 +142,23 @@ def confirmarEliminarPost(request,id):
 
 
 def editarPost(request,id):
-    posting = AgregarPost.objects.get(id=id)
+    posting = get_object_or_404(AgregarPost,id=id)
+    posting.delete()
+    posting.save()
     if request.method == "POST":
-        form = EditarPostForm(request.POST,request.FILES)
+        form = EditarPostForm(request.POST,request.FILES, instance =posting)
         if form.is_valid():
             titulo = request.POST["titulo"]
             descripcion = request.POST["descripcion"]
             imagen = request.FILES["imagen"]
-            post = AgregarPost(id = posting.id, titulo = titulo, descripcion = descripcion, imagen=imagen)
+            post = AgregarPost( id = posting.id, titulo = titulo, descripcion = descripcion, imagen=imagen, user_id = posting.user_id)
             post.save()
             return render(request, "blogApp/confirmaEdicion.html", {"mensaje": f"Post editado correctamente", "avatar":obtenerAvatar(request)})
         else:
-            return render(request, "blogApp/editarPost.html",{"formulario":form,"post":posting, "mensaje":"Error al editar Post", "avatar":obtenerAvatar(request)})
+            return render(request, "blogApp/editarPost.html",{"form":form, "mensaje":"Error al editar Post", "avatar":obtenerAvatar(request)})
     else:
         form = EditarPostForm()
-        return render(request, "blogApp/editarPost.html", {"formulario":form,"post":posting,"avatar":obtenerAvatar(request)}) 
+        return render(request, "blogApp/editarPost.html", {"form":form,"post":posting,"avatar":obtenerAvatar(request)}) 
+
     
 

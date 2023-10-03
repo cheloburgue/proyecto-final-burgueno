@@ -7,12 +7,13 @@
 
 {% block contenido_que_cambia %}
     
-    <h4>Editando Post {{post.titulo}}</h4>
+    <h4 style="margin-left:15%">Editando Post {{post.titulo}}</h4>
 
-    <form action="{% url 'editarPost' post.id %}" method="POST"> {% csrf_token %}
-        {{form.as_table}}
+    <form style=" width: 50vw; margin-left : 15vw;margin-top:1%" action="{% url 'editarPost' post.id %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
+        {{form.as_p}}
+        <input style="margin-left:35%" type="submit" class="btn btn-success" style ="margin-left:60%" value = "Guardar cambios">
     </form>
-    <input type="submit" class="btn btn-success" style ="margin-left:60%" value = "Guardar cambios">
+    
     
 
 

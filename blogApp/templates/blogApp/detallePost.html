@@ -6,13 +6,13 @@
 {% block contenido_que_cambia %}
     <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
     
-    <p ><h4 style="margin-left:38%">{{post.titulo}}</h4></p>
+    <p ><h4 style="margin-left:35%">{{post.titulo}}</h4></p>
 
     {% if post.imagen %}
-        <p style="margin-left:38%"><img src="{{post.imagen.url}}" alt="" height="500" width="500px"></p>
+        <p style="margin-left:35%"><img src="{{post.imagen.url}}" alt="" height="500" width="700px"></p>
     {% endif %}
-    <p style="margin-left:38%">Descripción: {{post.descripcion}}</p>
-    <p style="margin-left:38%">Fecha: {{post.fechaPublicacion}}</p>
+    <p style="margin-left:35%">Descripción: {{post.descripcion}}</p>
+    <p style="margin-left:35%">Fecha: {{post.fechaPublicacion}}</p>
     </div>
     
     {% if user.id == post.user_id%}
