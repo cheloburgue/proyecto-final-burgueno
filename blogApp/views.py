@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse_lazy
+from comentarios.models import Comentario
 
 # Create your views here.
 
@@ -15,7 +16,7 @@ def home(request):
 
 def acercaDeMi(request):
     mensaje = "Este es un mensaje acerca de mi"
-    return render(request,"blogApp/acercaDeMi.html",{"mensaje":mensaje})
+    return render(request,"blogApp/acercaDeMi.html",{"mensaje":mensaje,"avatar":obtenerAvatar(request)})
 
 def login_request(request):
     usuario = request.user
@@ -33,7 +34,7 @@ def login_request(request):
             return render(request,"blogApp/login.html", {"formulario":form,"mensaje":"Datos Invalidos"})    
     else:
         form = AuthenticationForm()
-        return render(request, "blogApp/login.html",{"formulario":form})
+        return render(request, "blogApp/login.html",{"formulario":form,"avatar":obtenerAvatar(request)})
             
 def register(request):
     if request.method == "POST":
@@ -54,7 +55,7 @@ def obtenerAvatar(request):
     if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "avatar/avatarpordefecto.png"
+        return "/media/avatar/avatarpordefecto.png"
     
 @login_required
 def agregarAvatar(request):
@@ -69,7 +70,7 @@ def agregarAvatar(request):
             avatar.save()
             return render(request, "blogApp/inicio.html", {"mensaje": f"Avatar agregado correctamente", "avatar":obtenerAvatar(request)})
         else:
-            return render(request, "blogApp/agregarAvatar.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar el avatar"})
+            return render(request, "blogApp/agregarAvatar.html",{"formulario":form, "usuario": request.user, "mensaje":"Error al agregar el avatar", "avatar":obtenerAvatar(request)})
     else:
         form = AvatarForm()
         return render(request, "blogApp/agregarAvatar.html", {"formulario":form, "usuario": request.user, "avatar":obtenerAvatar(request)})
@@ -118,11 +119,17 @@ def agregarPost(request):
 @login_required
 def misPost(request,user_id):
     user_post = AgregarPost.objects.filter(user_id = user_id)
-    return render(request,"blogApp/misPost.html",{"user_post":user_post,"avatar":obtenerAvatar(request)})
+    mensaje = ""
+    if len(user_post) < 1:
+        mensaje = "No tienes Post cargados!"
+    return render(request,"blogApp/misPost.html",{"mensaje":mensaje, "user_post":user_post,"avatar":obtenerAvatar(request)})
 
 def listar_post(request):
+    mensaje = ""
     user_post = AgregarPost.objects.all()
-    return render(request,"blogApp/misPost.html",{"user_post":user_post,"avatar":obtenerAvatar(request)})
+    if len(user_post) < 1:
+        mensaje = "No hay Post cargados!"
+    return render(request,"blogApp/misPost.html",{"mensaje":mensaje,"user_post":user_post,"avatar":obtenerAvatar(request)})
 
 def detallePost(request,id):
    post = get_object_or_404(AgregarPost,id=id)
@@ -140,7 +147,7 @@ def confirmarEliminarPost(request,id):
     mensaje = "Publicacion Elimiada!"
     return render(request, "blogApp/confirmarEliminarPost.html", {"mensaje": mensaje,"avatar":obtenerAvatar(request)})
 
-
+@login_required
 def editarPost(request,id):
     posting = get_object_or_404(AgregarPost,id=id)
     posting.delete()
@@ -159,6 +166,11 @@ def editarPost(request,id):
     else:
         form = EditarPostForm()
         return render(request, "blogApp/editarPost.html", {"form":form,"post":posting,"avatar":obtenerAvatar(request)}) 
+    
+def listar_comentarios(request,id):
+    comentarios = Comentario.objects.filter(comentario_id=id)
+    posts = AgregarPost.objects.filter(id=id)
+    return render(request,"blogApp/detallePostComentario.html",{"comentarios":comentarios,"posts":posts, "avatar":obtenerAvatar(request)})
 
     
 

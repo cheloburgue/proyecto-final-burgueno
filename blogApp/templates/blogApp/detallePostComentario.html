@@ -6,6 +6,7 @@
 {% block contenido_que_cambia %}
     <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
     
+    {% for post in posts%}
     <p ><h4 style="margin-left:35%">{{post.titulo}}</h4></p>
 
     {% if post.imagen %}
@@ -14,27 +15,20 @@
     <p style="margin-left:35%">Descripción: {{post.descripcion}}</p>
     <p style="margin-left:35%">Fecha: {{post.fechaPublicacion}}</p>
     </div>
-    
-    {% if user.id == post.user_id%}
-        <a class="btn btn-danger" style="margin-left:60%" href="{% url 'eliminarPost' post.id %}">Eliminar</a>
-        <a class="btn btn-success" style="margin-left:60%" href="{% url 'editarPost' post.id %}">Editar</a>
-    {% else %}
-         <a class="btn btn-info" style="margin-left:60%" href="{% url 'home' %}">Volver al Home</a>
-    {% endif %}
-    </div>
-
+    {% endfor %}
     <br>
     <div class="container">
         <h4>Comentarios...</h4>
         <br>
-    
         <div class="container">
+            {% for comentario in comentarios %}
+            <p><strong>{{comentario.nombre}}</strong></p>
+            <p>{{comentario.mensaje}}</p>
+            <p><small>{{comentario.fechaComentario}}</small></p>
+            <hr>
+            {% endfor %}
         
-            
-    <a class="btn btn-success" href= "{% url 'comentarios' post.id %}"> Ver Comentarios</a>
-    {% if user.is_authenticated %}
-    <a class="btn btn-info" href="{% url 'comentario' post.pk %}">Agrega un Comentario</a>
-    {% endif %}
+
     </div>
 {% endblock %}
 
