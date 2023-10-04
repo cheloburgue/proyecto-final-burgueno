@@ -50,3 +50,5 @@ Se visualizan los siguientes botones
 
 
 Link al video de Youtube -> https://youtu.be/X2YeeM-th1k
+
+Casos de prueba -> https://docs.google.com/spreadsheets/d/1VePCLoo13roF6YkxwfoL3c_fjx4bl2yqHp7nl9cWZKY/edit#gid=0
