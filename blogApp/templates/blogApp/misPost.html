@@ -4,7 +4,7 @@
 {% load static %}
 {% block titulo %} {{user.username}} {% endblock %}
 {% block contenido_que_cambia %}
-    <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+    <h4 style="margin-left:45%;margin-top:2%">{{mensaje}}</h4>
     
     {% for post in user_post %}
         <h3 style="margin-left:35%" >{{post.titulo}}</h3>
@@ -13,7 +13,17 @@
         <a class="btn btn-success" style="margin-left:60%" href="{% url 'detallePost' post.id %}">Ver detalle</a>
     {% endfor %}
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>    
+
 {% endblock %}
+
 
 
 {% block p1 %}{% endblock %}

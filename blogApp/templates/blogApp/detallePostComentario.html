@@ -1,0 +1,37 @@
+<!-- Extension del template padre-->
+{% extends "blogApp/home.html" %} 
+<!-- Cargo statics -->
+{% load static %}
+{% block titulo %} {{user.username}} {% endblock %}
+{% block contenido_que_cambia %}
+    <h4 style="margin-left:31%;margin-top:2%">{{mensaje}}</h4>
+    
+    {% for post in posts%}
+    <p ><h4 style="margin-left:35%">{{post.titulo}}</h4></p>
+
+    {% if post.imagen %}
+        <p style="margin-left:35%"><img src="{{post.imagen.url}}" alt="" height="500" width="700px"></p>
+    {% endif %}
+    <p style="margin-left:35%">Descripción: {{post.descripcion}}</p>
+    <p style="margin-left:35%">Fecha: {{post.fechaPublicacion}}</p>
+    </div>
+    {% endfor %}
+    <br>
+    <div class="container">
+        <h4>Comentarios...</h4>
+        <br>
+        <div class="container">
+            {% for comentario in comentarios %}
+            <p><strong>{{comentario.nombre}}</strong></p>
+            <p>{{comentario.mensaje}}</p>
+            <p><small>{{comentario.fechaComentario}}</small></p>
+            <hr>
+            {% endfor %}
+        
+
+    </div>
+{% endblock %}
+
+
+{% block p1 %}{% endblock %}
+{% block p2 %} {% endblock %}

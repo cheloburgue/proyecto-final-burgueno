@@ -12,10 +12,11 @@ class AgregarPost(models.Model):
     titulo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=500)
     imagen = models.ImageField( upload_to="avatar", null=False, blank=False)
-    fechaPublicacion = models.DateTimeField(auto_now_add=True)
+    fechaPublicacion = models.DateTimeField(null=False, blank=False)
 
     class Meta:
         ordering = ['user', '-fechaPublicacion']
 
     def __str__(self):
         return self.titulo
+    

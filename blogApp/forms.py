@@ -3,17 +3,20 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm, PasswordC
 from django.contrib.auth.models import User
 
 from .models import AgregarPost
+from datetime import datetime
 
 
 
 class RegistroUsuarioForm(UserCreationForm):
     email = forms.CharField(label="Email")
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Confirmar contraseña", widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ["username","email","password1","password2"]
+        fields = ["username","first_name","last_name","email","password1","password2"]
         help_texts = { k:"" for k in fields}
 
 class AvatarForm(forms.Form):
