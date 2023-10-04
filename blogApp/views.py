@@ -43,12 +43,12 @@ def register(request):
             info = form.cleaned_data
             nombre_usuario = info["username"]
             form.save()
-            return render(request, "blogApp/registerok.html", {"mensaje": f"Usuario {nombre_usuario} creado correctamente! Para iniciar sesión ingrese a Login."})
+            return render(request, "blogApp/registerok.html", {"mensaje": f"Usuario {nombre_usuario} creado correctamente! Para iniciar sesión ingrese a Login.", "avatar":obtenerAvatar(request)})
         else:
             return render(request, "blogApp/register.html", { "formulario": form, "mensaje": "Datos invalidos", "avatar":obtenerAvatar(request)})
     else:
         form = RegistroUsuarioForm()
-        return render(request,"blogApp/register.html", {"formulario":form})
+        return render(request,"blogApp/register.html", {"formulario":form, "avatar":obtenerAvatar(request)})
 
 def obtenerAvatar(request):
     avatares = Avatar.objects.filter(user=request.user.id)
@@ -108,7 +108,7 @@ def agregarPost(request):
             titulo = request.POST["titulo"]
             descripcion = request.POST["descripcion"]
             imagen = request.FILES["imagen"]
-            fecha_actual = datetime.date.today()
+            fecha_actual = datetime.now()
             post = AgregarPost(user = request.user, titulo = titulo, descripcion = descripcion, imagen=imagen, fechaPublicacion = fecha_actual)
             post.save()
             return render(request, "blogApp/inicio.html", {"mensaje": f"Post agregado correctamente", "avatar":obtenerAvatar(request)})

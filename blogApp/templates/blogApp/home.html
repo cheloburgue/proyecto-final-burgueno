@@ -29,8 +29,8 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'perfil' user.id %}">Perfil</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link active" style="border: 1px solid #d0d0d0;border-color:white" aria-current="page" href="{% url 'login' %}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'acercaDeMi' %}">Acerca de mi</a></li>
                         {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'acercaDeMi' %}">Acerca de mi</a></li>
                     </ul>
                 </div>
             </div>

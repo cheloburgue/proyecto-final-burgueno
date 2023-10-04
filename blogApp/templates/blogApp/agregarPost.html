@@ -7,7 +7,7 @@
 
 {% block contenido_que_cambia %}
     
-    <h4 style="margin-lest:45%">{{mensaje}}</h4>
+    <h4 style="margin-lest:43%">{{mensaje}}</h4>
 
     <form style=" width: 50vw; margin-left : 15vw;" action="{% url 'agregarPost' %}" method="POST" enctype ="multipart/form-data"> {% csrf_token %}
             {{formulario.as_p}}
