@@ -99,6 +99,7 @@ class UsuarioDetalle(DetailView):
     model = User
     template_name = "blogApp/perfil.html"
 
+
 @login_required
 def agregarPost(request):
     if request.method == "POST":
