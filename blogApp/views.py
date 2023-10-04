@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse_lazy
 from comentarios.models import Comentario
-
+from datetime import *
 # Create your views here.
 
 def home(request):
@@ -108,7 +108,8 @@ def agregarPost(request):
             titulo = request.POST["titulo"]
             descripcion = request.POST["descripcion"]
             imagen = request.FILES["imagen"]
-            post = AgregarPost(user = request.user, titulo = titulo, descripcion = descripcion, imagen=imagen)
+            fecha_actual = datetime.date.today()
+            post = AgregarPost(user = request.user, titulo = titulo, descripcion = descripcion, imagen=imagen, fechaPublicacion = fecha_actual)
             post.save()
             return render(request, "blogApp/inicio.html", {"mensaje": f"Post agregado correctamente", "avatar":obtenerAvatar(request)})
         else:
@@ -151,15 +152,14 @@ def confirmarEliminarPost(request,id):
 @login_required
 def editarPost(request,id):
     posting = get_object_or_404(AgregarPost,id=id)
-    posting.delete()
-    posting.save()
     if request.method == "POST":
         form = EditarPostForm(request.POST,request.FILES, instance =posting)
         if form.is_valid():
             titulo = request.POST["titulo"]
             descripcion = request.POST["descripcion"]
             imagen = request.FILES["imagen"]
-            post = AgregarPost( id = posting.id, titulo = titulo, descripcion = descripcion, imagen=imagen, user_id = posting.user_id)
+            fecha_actual = datetime.now()
+            post = AgregarPost( id = posting.id, titulo = titulo, descripcion = descripcion, imagen=imagen, user_id = posting.user_id, fechaPublicacion = fecha_actual)
             post.save()
             return render(request, "blogApp/confirmaEdicion.html", {"mensaje": f"Post editado correctamente", "avatar":obtenerAvatar(request)})
         else:

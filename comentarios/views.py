@@ -3,7 +3,6 @@ from django.views.generic import  CreateView
 from .forms import FormularioComentario
 from .models import Comentario
 from django.urls import reverse_lazy
-from blogApp.views import obtenerAvatar
 
 # Create your views here.
 
