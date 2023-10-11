@@ -24,7 +24,7 @@ EL PROGRAMA MUESTRA UNA PAGINA WEB DE UN BLOG PARA SUBIR LUGARES DEL MUNDO, VISU
 
 4 - Una vez levantado el servidor deberemos ingresar a la siguiente ruta local (Vease en la consola el IP del servidor que acabamos de levantar) 
       
-       http://127.0.0.1:8000/AppCoder/   (Agregarle el tag a la url  /AppCoder/ para poder visualizar correctamente la pagina web.
+       http://127.0.0.1:8000/AppCoder/   (Agregarle el tag a la url  /blogApp/ para poder visualizar correctamente la pagina web.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
