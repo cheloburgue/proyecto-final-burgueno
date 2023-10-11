@@ -5,10 +5,11 @@
 {% block titulo %} {{user.username}} {% endblock %}
 {% block contenido_que_cambia %}
 
-    <h3>Estas seguro queres eliminar el Post {{post.titulo}}?</h3>
+    <h3 style="margin-left:40%">Estas seguro queres eliminar el Post {{post.titulo}}?</h3>
+    <p>
     <a class="btn btn-success" style="margin-left:60%" href="{% url 'detallePost' post.id %}">No</a>
     <a class="btn btn-danger" style="margin-left:60%" href="{% url 'confirmarEliminarPost' post.id %}">Si</a>
-
+    </p>
 {% endblock %}
 
 

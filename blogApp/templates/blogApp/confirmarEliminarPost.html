@@ -5,7 +5,7 @@
 {% block titulo %} {{user.username}} {% endblock %}
 {% block contenido_que_cambia %}
 
-    <h3>{{mensaje}}</h3>
+    <h3 style="margin-left:40%">{{mensaje}}</h3>
     <a class="btn btn-info" style="margin-left:60%" href="{% url 'misPost' user.id %}">Voler a Mis Posts</a>
 
 {% endblock %}
